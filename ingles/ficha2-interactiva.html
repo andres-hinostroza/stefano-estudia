@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El Diario de Vacaciones</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><text y=%2224%22 font-size=%2224%22>🏝️</text></svg>">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <a class="back-link" href="../ingles.html">← Inglés</a>
+    <span class="eyebrow">🏝️ Ficha 2 · Ortografía y vacaciones</span>
+    <h1>El Diario de Vacaciones</h1>
+    <p>Practica la ortografía de los verbos regulares, el vocabulario de vacaciones y una
+    lectura sobre la aventura en la cueva. 5 estaciones.</p>
+  </div>
+  <svg class="skyline" viewBox="0 0 760 110" preserveAspectRatio="none" aria-hidden="true">
+    <polygon points="0,110 80,50 160,85 250,35 340,85 430,55 520,90 610,40 700,80 760,55 760,110" fill="#163A2A"/>
+    <ellipse cx="620" cy="70" rx="38" ry="14" fill="var(--gold)" opacity=".9"/>
+    <line x1="620" y1="56" x2="620" y2="30" stroke="#6b4a2b" stroke-width="3"/>
+    <path d="M620,32 Q600,28 596,40" stroke="var(--canopy)" stroke-width="3" fill="none"/>
+    <path d="M620,32 Q640,28 644,40" stroke="var(--canopy)" stroke-width="3" fill="none"/>
+    <rect x="0" y="98" width="760" height="12" fill="var(--sky)" opacity=".35"/>
+  </svg>
+</div>
+
+<div class="progress-dock">
+  <div class="progress-row">
+    <div class="stamps" id="stamps"></div>
+    <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
+    <div class="bar-label" id="barLabel">0/5</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <ol class="trail">
+
+    <!-- STATION A -->
+    <li class="station" data-accent="canopy">
+      <div class="badge-station">A</div>
+      <div class="station-card">
+        <p class="kicker">Estación 1 · Ortografía</p>
+        <h2>Las 4 reglas</h2>
+        <p class="station-instructions">Escribe el pasado de cada verbo.
+        <i>(I. base+ed · II. verbo en -e, +d · III. consonante+y→ied · IV. doble consonante+ed)</i></p>
+        <div id="stationA"></div>
+        <div class="btn-row"><button class="btn-action" data-check="a">Revisar</button></div>
+        <span class="feedback" id="msgA"></span>
+      </div>
+    </li>
+
+    <!-- STATION B -->
+    <li class="station" data-accent="sky">
+      <div class="badge-station">B</div>
+      <div class="station-card">
+        <p class="kicker">Estación 2 · Vocabulario</p>
+        <h2>El scrapbook de vacaciones</h2>
+        <p class="station-instructions">Escribe cada actividad en pasado, como si tú la hubieras hecho.</p>
+        <div id="stationB"></div>
+        <div class="btn-row"><button class="btn-action" data-check="b">Revisar</button></div>
+        <span class="feedback" id="msgB"></span>
+      </div>
+    </li>
+
+    <!-- STATION C -->
+    <li class="station" data-accent="canopy">
+      <div class="badge-station">C</div>
+      <div class="station-card">
+        <p class="kicker">Estación 3 · Lee y corrige</p>
+        <h2>El viaje de Camila</h2>
+        <p class="quote-box">Last weekend, Camila went to Paracas with her grandparents. They saw sea
+        lions and penguins on a boat trip. They had lunch next to the beach. They drank fresh orange
+        juice. Camila swam in the sea, and her grandfather caught two fish. In the evening, they ate
+        the fish for dinner. It was delicious!</p>
+        <p class="station-instructions">Corrige las oraciones falsas.</p>
+        <div id="stationC"></div>
+        <div class="btn-row"><button class="btn-action" data-check="c">Revisar</button></div>
+        <span class="feedback" id="msgC"></span>
+      </div>
+    </li>
+
+    <!-- STATION D -->
+    <li class="station" data-accent="coral">
+      <div class="badge-station">D</div>
+      <div class="station-card">
+        <p class="kicker">Estación 4 · Comprensión</p>
+        <h2>La aventura en la cueva</h2>
+        <p class="quote-box">Last Saturday, Ruby, Sofia, and their friends went into a cave. It was
+        very dark, and Sofia didn't like the bats. They tried two different paths. Finally, they found
+        a big treasure box! But then, a director shouted "Cut!" — they were actually on a film set in
+        Hollywood! Four actors didn't come that morning, so the children helped act in the movie. Jack
+        wasn't very good at acting, but Sofia told him he was a great actor. At the end, everyone said
+        the movie was great. <b>Value: Encourage your friends.</b></p>
+        <div id="stationD-tf"></div>
+        <div id="stationD-open"></div>
+        <div class="btn-row"><button class="btn-action" data-check="d">Revisar</button></div>
+        <span class="feedback" id="msgD"></span>
+      </div>
+    </li>
+
+    <!-- STATION E -->
+    <li class="station" data-accent="gold">
+      <div class="badge-station">E</div>
+      <div class="station-card">
+        <p class="kicker">Estación 5 · Escritura libre</p>
+        <h2>Escribe una postal</h2>
+        <p class="station-instructions">Imagina que estás de vacaciones. Completa la postal usando el pasado.</p>
+        <textarea id="postcard" placeholder="Dear friend,&#10;Last week I went to...&#10;I saw...&#10;I ate... and I drank...&#10;It was...&#10;See you soon, Stefano"></textarea>
+        <div class="btn-row"><button class="btn-action" id="finishE">Marcar como completado</button></div>
+        <span class="feedback" id="msgE"></span>
+      </div>
+    </li>
+  </ol>
+
+  <div class="finale" id="finale">
+    <svg class="medal" viewBox="0 0 64 64" aria-hidden="true">
+      <circle cx="32" cy="26" r="18" fill="var(--gold)"/>
+      <circle cx="32" cy="26" r="12" fill="var(--hero-bg)"/>
+      <polygon points="32,18 34.2,23 39.5,23.3 35.3,26.8 36.8,32 32,28.8 27.2,32 28.7,26.8 24.5,23.3 29.8,23" fill="var(--gold)"/>
+      <polygon points="22,40 26,56 32,50 38,56 42,40" fill="var(--coral)"/>
+    </svg>
+    <h2>¡Diario completo!</h2>
+    <p>Terminaste las 5 estaciones. Papá te quiere muchísimo y está muy orgulloso de ti. 💚</p>
+  </div>
+
+  <p class="footer-note">Tu progreso se guarda en este dispositivo. <button id="resetBtn" type="button" class="link-btn">Reiniciar ficha</button></p>
+</div>
+
+<script src="../assets/feedback.js"></script>
+<script>
+(function(){
+  "use strict";
+  var STORE_KEY = "ficha2-progress-v1";
+
+  function loadState(){ try{ var r = localStorage.getItem(STORE_KEY); return r ? JSON.parse(r) : {}; }catch(e){ return {}; } }
+  function saveState(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){} }
+
+  var state = Object.assign({
+    a:{values:Array(12).fill(""), done:false},
+    b:{values:Array(10).fill(""), done:false},
+    c:{values:Array(6).fill(""), done:false},
+    d:{tf:Array(5).fill(null), open:Array(2).fill(""), done:false},
+    e:{text:"", done:false}
+  }, loadState());
+
+  function normalize(s){
+    s = (s || "").toLowerCase();
+    s = s.replace(/didn[’']?t/g, "did not");
+    s = s.replace(/[^a-z\s]/g, " ");
+    s = s.replace(/\s+/g, " ").trim();
+    return s;
+  }
+
+  function buildFillIn(containerId, items, stateKey, withPrompt, prefix){
+    var container = document.getElementById(containerId);
+    items.forEach(function(it, idx){
+      var row = document.createElement("div");
+      row.className = "item";
+      var num = document.createElement("span");
+      num.className = "num"; num.textContent = (idx+1) + ".";
+      row.appendChild(num);
+      var p = document.createElement("span");
+      p.className = "prompt";
+      p.textContent = withPrompt ? (it.prompt + " →") : (it.label + (prefix ? " → " + prefix : " →"));
+      row.appendChild(p);
+      var input = document.createElement("input");
+      input.type = "text"; input.autocomplete = "off"; input.spellcheck = false;
+      input.setAttribute("aria-label", "Respuesta " + (idx+1));
+      input.value = state[stateKey].values[idx] || "";
+      input.addEventListener("input", function(){
+        state[stateKey].values[idx] = input.value;
+        input.classList.remove("ok","bad");
+        var corr = row.querySelector(".correction");
+        if(corr) corr.remove();
+        saveState();
+      });
+      row.appendChild(input);
+      container.appendChild(row);
+    });
+  }
+
+  function checkFillIn(containerId, items, stateKey, msgId){
+    var container = document.getElementById(containerId);
+    var inputs = container.querySelectorAll("input[type=text]");
+    var allOk = true;
+    items.forEach(function(it, idx){
+      var input = inputs[idx];
+      var row = input.closest(".item");
+      var old = row.querySelector(".correction");
+      if(old) old.remove();
+      var ok = normalize(input.value) === normalize(it.answer);
+      input.classList.toggle("ok", ok);
+      input.classList.toggle("bad", !ok);
+      if(!ok){
+        allOk = false;
+        var corr = document.createElement("span");
+        corr.className = "correction";
+        corr.innerHTML = "Respuesta: <b>" + it.answer + "</b>";
+        row.appendChild(corr);
+      }
+    });
+    state[stateKey].done = allOk;
+    saveState();
+    Feedback.render(document.getElementById(msgId), allOk);
+    updateProgress();
+  }
+
+  /* ---- A: ortografía ---- */
+  var aItems = [
+    {label:"walk", answer:"walked"}, {label:"like", answer:"liked"},
+    {label:"carry", answer:"carried"}, {label:"stop", answer:"stopped"},
+    {label:"play", answer:"played"}, {label:"dance", answer:"danced"},
+    {label:"study", answer:"studied"}, {label:"plan", answer:"planned"},
+    {label:"clean", answer:"cleaned"}, {label:"move", answer:"moved"},
+    {label:"cry", answer:"cried"}, {label:"chat", answer:"chatted"}
+  ];
+  buildFillIn("stationA", aItems, "a", false, "");
+
+  /* ---- B: scrapbook ---- */
+  var bItems = [
+    {label:"see animals", answer:"saw animals"},
+    {label:"swim in a lake", answer:"swam in a lake"},
+    {label:"climb a mountain", answer:"climbed a mountain"},
+    {label:"have a picnic", answer:"had a picnic"},
+    {label:"drink coffee", answer:"drank coffee"},
+    {label:"go on a boat trip", answer:"went on a boat trip"},
+    {label:"see a cave", answer:"saw a cave"},
+    {label:"catch a fish", answer:"caught a fish"},
+    {label:"take photos", answer:"took photos"},
+    {label:"visit a museum", answer:"visited a museum"}
+  ];
+  buildFillIn("stationB", bItems, "b", false, "I");
+
+  /* ---- C: Camila ---- */
+  var cItems = [
+    {prompt:"Camila went to Russia.", answer:"Camila went to Paracas."},
+    {prompt:"They saw dolphins and penguins.", answer:"They saw sea lions and penguins."},
+    {prompt:"They had lunch at a restaurant.", answer:"They had lunch next to the beach."},
+    {prompt:"They drank hot chocolate.", answer:"They drank fresh orange juice."},
+    {prompt:"Her grandfather caught three fish.", answer:"Her grandfather caught two fish."},
+    {prompt:"They ate chicken for dinner.", answer:"They ate fish for dinner."}
+  ];
+  buildFillIn("stationC", cItems, "c", true, "");
+
+  document.querySelector('[data-check="a"]').addEventListener("click", function(){ checkFillIn("stationA", aItems, "a", "msgA"); });
+  document.querySelector('[data-check="b"]').addEventListener("click", function(){ checkFillIn("stationB", bItems, "b", "msgB"); });
+  document.querySelector('[data-check="c"]').addEventListener("click", function(){ checkFillIn("stationC", cItems, "c", "msgC"); });
+
+  /* ---- D: comprensión (T/F + abiertas) ---- */
+  var dTF = [
+    {text:"The children went into a forest.", correct:false, note:"They went into a cave."},
+    {text:"Sofia liked the bats.", correct:false, note:"She didn't like the bats."},
+    {text:"They found a treasure box in the cave.", correct:true, note:""},
+    {text:"They were on a real vacation in Hollywood.", correct:false, note:"They were on a film set, filming a movie."},
+    {text:"Jack felt confident about acting from the start.", correct:false, note:"He wasn't very good at acting at first; his friend encouraged him."}
+  ];
+  (function(){
+    var container = document.getElementById("stationD-tf");
+    dTF.forEach(function(it, idx){
+      var row = document.createElement("div");
+      row.className = "item";
+      row.style.flexDirection = "column";
+      row.style.alignItems = "flex-start";
+      var line = document.createElement("div");
+      line.innerHTML = '<span class="num">' + (idx+1) + '.</span> <span class="prompt">' + it.text + '</span>';
+      row.appendChild(line);
+      var choices = document.createElement("div");
+      choices.style.display = "flex"; choices.style.gap = "14px"; choices.style.marginTop = "4px";
+      ["Verdadero","Falso"].forEach(function(label, vIdx){
+        var wrap = document.createElement("label");
+        wrap.style.display = "flex"; wrap.style.alignItems = "center"; wrap.style.gap = "4px";
+        wrap.style.fontSize = ".88rem"; wrap.style.color = "var(--ink-soft)";
+        var radio = document.createElement("input");
+        radio.type = "radio"; radio.name = "tf" + idx; radio.value = vIdx === 0 ? "true" : "false";
+        if(state.d.tf[idx] === (vIdx===0)) radio.checked = true;
+        radio.addEventListener("change", function(){
+          state.d.tf[idx] = (vIdx === 0);
+          saveState();
+        });
+        wrap.appendChild(radio);
+        wrap.appendChild(document.createTextNode(label));
+        choices.appendChild(wrap);
+      });
+      row.appendChild(choices);
+      if(it.note){
+        var note = document.createElement("span");
+        note.className = "correction";
+        note.style.display = "none";
+        note.innerHTML = "Dato correcto: <b>" + it.note + "</b>";
+        note.dataset.idx = idx;
+        row.appendChild(note);
+      }
+      container.appendChild(row);
+    });
+  })();
+
+  var dOpen = [
+    {q:"6. Where did the story happen at the end?", keywords:["hollywood"], answer:"In Hollywood, on a film set."},
+    {q:"7. What is the value of the story?", keywords:["encourage","friend"], answer:"Encourage your friends."}
+  ];
+  (function(){
+    var container = document.getElementById("stationD-open");
+    dOpen.forEach(function(it, idx){
+      var row = document.createElement("div");
+      row.className = "item";
+      var p = document.createElement("span");
+      p.className = "prompt"; p.textContent = it.q;
+      row.appendChild(p);
+      var input = document.createElement("input");
+      input.type = "text"; input.autocomplete = "off";
+      input.value = state.d.open[idx] || "";
+      input.addEventListener("input", function(){
+        state.d.open[idx] = input.value;
+        input.classList.remove("ok","bad");
+        saveState();
+      });
+      row.appendChild(input);
+      container.appendChild(row);
+    });
+  })();
+
+  document.querySelector('[data-check="d"]').addEventListener("click", function(){
+    var allOk = true;
+    dTF.forEach(function(it, idx){
+      var ok = state.d.tf[idx] === it.correct;
+      if(!ok) allOk = false;
+      var note = document.querySelector('.correction[data-idx="' + idx + '"]');
+      if(note) note.style.display = (it.note && !ok) ? "block" : "none";
+    });
+    var openInputs = document.getElementById("stationD-open").querySelectorAll("input[type=text]");
+    dOpen.forEach(function(it, idx){
+      var val = normalize(openInputs[idx].value);
+      var ok = it.keywords.every(function(kw){ return val.indexOf(kw) > -1; });
+      openInputs[idx].classList.toggle("ok", ok);
+      openInputs[idx].classList.toggle("bad", !ok);
+      var row = openInputs[idx].closest(".item");
+      var old = row.querySelector(".correction");
+      if(old) old.remove();
+      if(!ok){
+        allOk = false;
+        var corr = document.createElement("span");
+        corr.className = "correction";
+        corr.innerHTML = "Respuesta: <b>" + it.answer + "</b>";
+        row.appendChild(corr);
+      }
+    });
+    state.d.done = allOk;
+    saveState();
+    Feedback.render(document.getElementById("msgD"), allOk);
+    updateProgress();
+  });
+
+  /* ---- E: postal ---- */
+  var postcard = document.getElementById("postcard");
+  postcard.value = state.e.text || "";
+  postcard.addEventListener("input", function(){ state.e.text = postcard.value; saveState(); });
+  document.getElementById("finishE").addEventListener("click", function(){
+    var hasText = postcard.value.trim().length > 20;
+    state.e.done = hasText;
+    saveState();
+    var msg = document.getElementById("msgE");
+    if(hasText){ Feedback.render(msg, true); }
+    else { msg.textContent = "Escribe un poco más antes de terminar. Papá te quiere sin importar cuánto tardes."; msg.className = "feedback fb-bad"; }
+    updateProgress();
+  });
+
+  /* ---- Progreso ---- */
+  var stampsEl = document.getElementById("stamps");
+  var stationKeys = ["A","B","C","D","E"];
+  stationKeys.forEach(function(k){
+    var s = document.createElement("div");
+    s.className = "stamp"; s.id = "stampStation" + k; s.textContent = k;
+    stampsEl.appendChild(s);
+  });
+  function stationDone(key){
+    if(key === "A") return !!state.a.done;
+    if(key === "B") return !!state.b.done;
+    if(key === "C") return !!state.c.done;
+    if(key === "D") return !!state.d.done;
+    if(key === "E") return !!state.e.done;
+    return false;
+  }
+  function updateProgress(){
+    var doneCount = 0;
+    stationKeys.forEach(function(k){
+      var el = document.getElementById("stampStation" + k);
+      var done = stationDone(k);
+      el.classList.toggle("done", done);
+      if(done) doneCount++;
+    });
+    document.getElementById("barFill").style.width = (doneCount/5*100) + "%";
+    document.getElementById("barLabel").textContent = doneCount + "/5";
+    document.getElementById("finale").classList.toggle("unlocked", doneCount === 5);
+  }
+
+  if(state.a.done) checkFillIn("stationA", aItems, "a", "msgA");
+  if(state.b.done) checkFillIn("stationB", bItems, "b", "msgB");
+  if(state.c.done) checkFillIn("stationC", cItems, "c", "msgC");
+  if(state.d.done) document.querySelector('[data-check="d"]').click();
+  if(state.e.done) Feedback.render(document.getElementById("msgE"), true);
+  updateProgress();
+
+  document.getElementById("resetBtn").addEventListener("click", function(){
+    try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+    location.reload();
+  });
+})();
+</script>
+</body>
+</html>

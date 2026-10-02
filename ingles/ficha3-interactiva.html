@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simple Past Tense: 8 Verbos</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><text y=%2224%22 font-size=%2224%22>📘</text></svg>">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <a class="back-link" href="../ingles.html">← Inglés</a>
+    <span class="eyebrow">📘 Ficha 3 · Práctica enfocada</span>
+    <h1>Simple Past Tense</h1>
+    <p>Solo los 8 verbos de tu cuaderno: <b>walk, play, like, move, carry, study, plan, stop</b>.
+    4 estaciones para automatizarlos.</p>
+  </div>
+</div>
+
+<div class="progress-dock">
+  <div class="progress-row">
+    <div class="stamps" id="stamps"></div>
+    <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
+    <div class="bar-label" id="barLabel">0/4</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <ol class="trail">
+
+    <!-- STATION A -->
+    <li class="station" data-accent="canopy">
+      <div class="badge-station">A</div>
+      <div class="station-card">
+        <p class="kicker">Estación 1 · Ortografía</p>
+        <h2>Escribe el pasado</h2>
+        <p class="station-instructions">Los 8 verbos de la captura de tu cuaderno.</p>
+        <div id="stationA"></div>
+        <div class="btn-row"><button class="btn-action" data-check="a">Revisar</button></div>
+        <span class="feedback" id="msgA"></span>
+      </div>
+    </li>
+
+    <!-- STATION B: DRILL -->
+    <li class="station" data-accent="sky">
+      <div class="badge-station">B</div>
+      <div class="station-card">
+        <p class="kicker">Estación 2 · Conjugación</p>
+        <h2>El entrenador de tablas</h2>
+        <p class="station-instructions">Completa afirmativo, interrogativo y negativo para cada pronombre.
+        Igual que la tabla de tu cuaderno, una fila a la vez.</p>
+        <div class="drill-box">
+          <div class="drill-pron" id="drillPron">I</div>
+          <div class="drill-verb" id="drillVerb">walk</div>
+          <div class="drill-row">
+            <div>
+              <label for="drillAff">Afirmativo</label>
+              <input type="text" id="drillAff" autocomplete="off">
+            </div>
+            <div>
+              <label for="drillInt">Interrogativo</label>
+              <input type="text" id="drillInt" autocomplete="off">
+            </div>
+            <div>
+              <label for="drillNeg">Negativo</label>
+              <input type="text" id="drillNeg" autocomplete="off">
+            </div>
+          </div>
+          <div class="btn-row" style="justify-content:center;">
+            <button class="btn-action" id="drillCheck">Comprobar</button>
+            <button class="btn-action" id="drillPrev" style="background:var(--surface-2); color:var(--ink);">← Anterior</button>
+            <button class="btn-action" id="drillNext">Siguiente →</button>
+          </div>
+          <span class="feedback" id="msgDrill"></span>
+          <p class="result-count" id="drillCount" style="margin-top:10px;">Fila 1 / 16</p>
+        </div>
+      </div>
+    </li>
+
+    <!-- STATION C -->
+    <li class="station" data-accent="canopy">
+      <div class="badge-station">C</div>
+      <div class="station-card">
+        <p class="kicker">Estación 3 · Traducción</p>
+        <h2>Español → Inglés</h2>
+        <div id="stationC"></div>
+        <div class="btn-row"><button class="btn-action" data-check="c">Revisar</button></div>
+        <span class="feedback" id="msgC"></span>
+      </div>
+    </li>
+
+    <!-- STATION D -->
+    <li class="station" data-accent="coral">
+      <div class="badge-station">D</div>
+      <div class="station-card">
+        <p class="kicker">Estación 4 · Transforma</p>
+        <h2>Afirmativo → Negativo e Interrogativo</h2>
+        <div id="stationD"></div>
+        <div class="btn-row"><button class="btn-action" data-check="d">Revisar</button></div>
+        <span class="feedback" id="msgD"></span>
+      </div>
+    </li>
+  </ol>
+
+  <div class="finale" id="finale">
+    <svg class="medal" viewBox="0 0 64 64" aria-hidden="true">
+      <circle cx="32" cy="26" r="18" fill="var(--gold)"/>
+      <circle cx="32" cy="26" r="12" fill="var(--hero-bg)"/>
+      <polygon points="32,18 34.2,23 39.5,23.3 35.3,26.8 36.8,32 32,28.8 27.2,32 28.7,26.8 24.5,23.3 29.8,23" fill="var(--gold)"/>
+      <polygon points="22,40 26,56 32,50 38,56 42,40" fill="var(--coral)"/>
+    </svg>
+    <h2>¡8 verbos dominados!</h2>
+    <p>Papá te quiere muchísimo y está muy orgulloso de tu esfuerzo. 💚</p>
+  </div>
+
+  <p class="footer-note">Tu progreso se guarda en este dispositivo. <button id="resetBtn" type="button" class="link-btn">Reiniciar ficha</button></p>
+</div>
+
+<script src="../assets/feedback.js"></script>
+<script>
+(function(){
+  "use strict";
+  var STORE_KEY = "ficha3-progress-v1";
+  function loadState(){ try{ var r = localStorage.getItem(STORE_KEY); return r ? JSON.parse(r) : {}; }catch(e){ return {}; } }
+  function saveState(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){} }
+
+  var state = Object.assign({
+    a:{values:Array(8).fill(""), done:false},
+    b:{row:0, values:Array(16).fill(null).map(function(){return {aff:"",int:"",neg:""};}), results:Array(16).fill(false)},
+    c:{values:Array(10).fill(""), done:false},
+    d:{values:Array(16).fill(""), done:false}
+  }, loadState());
+
+  function normalize(s){
+    s = (s || "").toLowerCase();
+    s = s.replace(/didn[’']?t/g, "did not");
+    s = s.replace(/¿|\?|¡|!/g, " ");
+    s = s.replace(/[^a-z\s]/g, " ");
+    s = s.replace(/\s+/g, " ").trim();
+    return s;
+  }
+
+  function checkFillIn(containerId, items, stateKey, msgId){
+    var container = document.getElementById(containerId);
+    var inputs = container.querySelectorAll("input[type=text]");
+    var allOk = true;
+    items.forEach(function(it, idx){
+      var input = inputs[idx];
+      var row = input.closest(".item");
+      var old = row.querySelector(".correction");
+      if(old) old.remove();
+      var ok = normalize(input.value) === normalize(it.answer);
+      input.classList.toggle("ok", ok);
+      input.classList.toggle("bad", !ok);
+      if(!ok){
+        allOk = false;
+        var corr = document.createElement("span");
+        corr.className = "correction";
+        corr.innerHTML = "Respuesta: <b>" + it.answer + "</b>";
+        row.appendChild(corr);
+      }
+    });
+    state[stateKey].done = allOk;
+    saveState();
+    Feedback.render(document.getElementById(msgId), allOk);
+    updateProgress();
+  }
+
+  /* ---- A ---- */
+  var VERBS = [
+    ["walk","walked"], ["play","played"], ["like","liked"], ["move","moved"],
+    ["carry","carried"], ["study","studied"], ["plan","planned"], ["stop","stopped"]
+  ];
+  var aItems = VERBS.map(function(v){ return {label:v[0], answer:v[1]}; });
+  (function(){
+    var container = document.getElementById("stationA");
+    aItems.forEach(function(it, idx){
+      var row = document.createElement("div");
+      row.className = "item";
+      row.innerHTML = '<span class="num">' + (idx+1) + '.</span><span class="prompt">' + it.label + ' →</span>';
+      var input = document.createElement("input");
+      input.type = "text"; input.autocomplete = "off";
+      input.value = state.a.values[idx] || "";
+      input.addEventListener("input", function(){
+        state.a.values[idx] = input.value;
+        input.classList.remove("ok","bad");
+        var c = row.querySelector(".correction"); if(c) c.remove();
+        saveState();
+      });
+      row.appendChild(input);
+      container.appendChild(row);
+    });
+  })();
+  document.querySelector('[data-check="a"]').addEventListener("click", function(){ checkFillIn("stationA", aItems, "a", "msgA"); });
+
+  /* ---- B: drill de conjugación ---- */
+  var pronombres = ["I","You","He","She","It","We","You","They"];
+  var drillRows = [];
+  ["walk","study"].forEach(function(v){
+    var past = VERBS.filter(function(x){return x[0]===v;})[0][1];
+    pronombres.forEach(function(p){
+      drillRows.push({
+        verb:v, past:past, pron:p,
+        aff: p + " " + past,
+        int: "Did " + p.toLowerCase() + " " + v + "?",
+        neg: p + " did not " + v
+      });
+    });
+  });
+
+  var pronEl = document.getElementById("drillPron");
+  var verbEl = document.getElementById("drillVerb");
+  var affEl = document.getElementById("drillAff");
+  var intEl = document.getElementById("drillInt");
+  var negEl = document.getElementById("drillNeg");
+  var countEl = document.getElementById("drillCount");
+
+  function renderDrillRow(){
+    var i = state.b.row;
+    var r = drillRows[i];
+    pronEl.textContent = r.pron;
+    verbEl.textContent = r.verb;
+    affEl.value = state.b.values[i].aff || "";
+    intEl.value = state.b.values[i].int || "";
+    negEl.value = state.b.values[i].neg || "";
+    [affEl,intEl,negEl].forEach(function(el){ el.classList.remove("ok","bad"); });
+    countEl.textContent = "Fila " + (i+1) + " / 16" + (state.b.results[i] ? "  ✓" : "");
+    document.getElementById("msgDrill").textContent = "";
+    document.getElementById("msgDrill").className = "feedback";
+  }
+  [affEl,intEl,negEl].forEach(function(el, idx){
+    var key = idx===0 ? "aff" : idx===1 ? "int" : "neg";
+    el.addEventListener("input", function(){
+      state.b.values[state.b.row][key] = el.value;
+      saveState();
+    });
+  });
+  document.getElementById("drillCheck").addEventListener("click", function(){
+    var i = state.b.row;
+    var r = drillRows[i];
+    var okAff = normalize(affEl.value) === normalize(r.aff);
+    var okInt = normalize(intEl.value) === normalize(r.int);
+    var okNeg = normalize(negEl.value) === normalize(r.neg);
+    affEl.classList.toggle("ok", okAff); affEl.classList.toggle("bad", !okAff);
+    intEl.classList.toggle("ok", okInt); intEl.classList.toggle("bad", !okInt);
+    negEl.classList.toggle("ok", okNeg); negEl.classList.toggle("bad", !okNeg);
+    var allOk = okAff && okInt && okNeg;
+    state.b.results[i] = allOk;
+    saveState();
+    var msg = document.getElementById("msgDrill");
+    if(allOk){
+      Feedback.render(msg, true);
+    } else {
+      msg.className = "feedback fb-bad";
+      msg.innerHTML = Feedback.incorrect() + "<br>Correcto: " + r.aff + " / " + r.int + " / " + r.neg;
+    }
+    countEl.textContent = "Fila " + (i+1) + " / 16" + (state.b.results[i] ? "  ✓" : "");
+    updateProgress();
+  });
+  document.getElementById("drillNext").addEventListener("click", function(){
+    state.b.row = Math.min(state.b.row + 1, drillRows.length - 1);
+    saveState(); renderDrillRow();
+  });
+  document.getElementById("drillPrev").addEventListener("click", function(){
+    state.b.row = Math.max(state.b.row - 1, 0);
+    saveState(); renderDrillRow();
+  });
+  renderDrillRow();
+
+  /* ---- C: traducción ---- */
+  var cItems = [
+    {prompt:"Yo caminé a la escuela.", answer:"I walked to school."},
+    {prompt:"Tú no estudiaste ayer.", answer:"You did not study yesterday."},
+    {prompt:"¿Ella jugó en el parque?", answer:"Did she play in the park?"},
+    {prompt:"Nosotros no paramos el auto.", answer:"We did not stop the car."},
+    {prompt:"Él cargó la caja.", answer:"He carried the box."},
+    {prompt:"Ellos no se movieron.", answer:"They did not move."},
+    {prompt:"¿Ustedes planearon el viaje?", answer:"Did you plan the trip?"},
+    {prompt:"A mí me gustó la película.", answer:"I liked the movie."},
+    {prompt:"¿Tú caminaste rápido?", answer:"Did you walk fast?"},
+    {prompt:"Ella no estudió matemáticas.", answer:"She did not study math."}
+  ];
+  (function(){
+    var container = document.getElementById("stationC");
+    cItems.forEach(function(it, idx){
+      var row = document.createElement("div");
+      row.className = "item";
+      row.innerHTML = '<span class="num">' + (idx+1) + '.</span><span class="prompt">' + it.prompt + ' →</span>';
+      var input = document.createElement("input");
+      input.type = "text"; input.autocomplete = "off";
+      input.value = state.c.values[idx] || "";
+      input.addEventListener("input", function(){
+        state.c.values[idx] = input.value;
+        input.classList.remove("ok","bad");
+        var c = row.querySelector(".correction"); if(c) c.remove();
+        saveState();
+      });
+      row.appendChild(input);
+      container.appendChild(row);
+    });
+  })();
+  document.querySelector('[data-check="c"]').addEventListener("click", function(){ checkFillIn("stationC", cItems, "c", "msgC"); });
+
+  /* ---- D: transforma ---- */
+  var dBase = [
+    {s:"I played football.", neg:"I did not play football.", int:"Did I play football?"},
+    {s:"She liked the book.", neg:"She did not like the book.", int:"Did she like the book?"},
+    {s:"They stopped the car.", neg:"They did not stop the car.", int:"Did they stop the car?"},
+    {s:"He studied English.", neg:"He did not study English.", int:"Did he study English?"},
+    {s:"We carried the boxes.", neg:"We did not carry the boxes.", int:"Did we carry the boxes?"},
+    {s:"You planned the trip.", neg:"You did not plan the trip.", int:"Did you plan the trip?"},
+    {s:"I walked home.", neg:"I did not walk home.", int:"Did I walk home?"},
+    {s:"It moved slowly.", neg:"It did not move slowly.", int:"Did it move slowly?"}
+  ];
+  (function(){
+    var container = document.getElementById("stationD");
+    dBase.forEach(function(it, idx){
+      var wrap = document.createElement("div");
+      wrap.className = "qa-pair";
+      wrap.innerHTML = '<div class="prompt-line">' + (idx+1) + '. ' + it.s + '</div>';
+      [["Negativo", idx*2], ["Interrogativo", idx*2+1]].forEach(function(cfg){
+        var row = document.createElement("div");
+        row.className = "row";
+        var label = document.createElement("label"); label.textContent = cfg[0];
+        row.appendChild(label);
+        var input = document.createElement("input");
+        input.type = "text"; input.autocomplete = "off"; input.style.flex = "1 1 200px";
+        input.value = state.d.values[cfg[1]] || "";
+        input.addEventListener("input", function(){
+          state.d.values[cfg[1]] = input.value;
+          input.classList.remove("ok","bad");
+          saveState();
+        });
+        row.appendChild(input);
+        wrap.appendChild(row);
+      });
+      container.appendChild(wrap);
+    });
+  })();
+  document.querySelector('[data-check="d"]').addEventListener("click", function(){
+    var container = document.getElementById("stationD");
+    var inputs = container.querySelectorAll("input[type=text]");
+    var allOk = true;
+    dBase.forEach(function(it, idx){
+      var negInput = inputs[idx*2];
+      var intInput = inputs[idx*2+1];
+      var negOk = normalize(negInput.value) === normalize(it.neg);
+      var intOk = normalize(intInput.value) === normalize(it.int);
+      negInput.classList.toggle("ok", negOk); negInput.classList.toggle("bad", !negOk);
+      intInput.classList.toggle("ok", intOk); intInput.classList.toggle("bad", !intOk);
+      if(!negOk || !intOk) allOk = false;
+    });
+    state.d.done = allOk;
+    saveState();
+    Feedback.render(document.getElementById("msgD"), allOk);
+    updateProgress();
+  });
+
+  /* ---- Progreso ---- */
+  var stampsEl = document.getElementById("stamps");
+  var stationKeys = ["A","B","C","D"];
+  stationKeys.forEach(function(k){
+    var s = document.createElement("div");
+    s.className = "stamp"; s.id = "stampStation" + k; s.textContent = k;
+    stampsEl.appendChild(s);
+  });
+  function stationDone(key){
+    if(key === "A") return !!state.a.done;
+    if(key === "B") return state.b.results.every(function(r){return r;});
+    if(key === "C") return !!state.c.done;
+    if(key === "D") return !!state.d.done;
+    return false;
+  }
+  function updateProgress(){
+    var doneCount = 0;
+    stationKeys.forEach(function(k){
+      var el = document.getElementById("stampStation" + k);
+      var done = stationDone(k);
+      el.classList.toggle("done", done);
+      if(done) doneCount++;
+    });
+    document.getElementById("barFill").style.width = (doneCount/4*100) + "%";
+    document.getElementById("barLabel").textContent = doneCount + "/4";
+    document.getElementById("finale").classList.toggle("unlocked", doneCount === 4);
+  }
+
+  if(state.a.done) checkFillIn("stationA", aItems, "a", "msgA");
+  if(state.c.done) checkFillIn("stationC", cItems, "c", "msgC");
+  if(state.d.done) document.querySelector('[data-check="d"]').click();
+  updateProgress();
+
+  document.getElementById("resetBtn").addEventListener("click", function(){
+    try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+    location.reload();
+  });
+})();
+</script>
+</body>
+</html>
