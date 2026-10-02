@@ -1,0 +1,1040 @@
+<title>La Expedición del Pasado</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+  :root{
+    --bg:#F2E8CF;
+    --surface:#FBF6E9;
+    --surface-2:#EADFC0;
+    --ink:#3A2E1F;
+    --ink-soft:#73614A;
+    --jungle:#1B4332;
+    --canopy:#2D6A4F;
+    --gold:#D99A2B;
+    --coral:#E76F51;
+    --sky:#2C8C93;
+    --ok:#2F9E57;
+    --err:#D64545;
+    --border:rgba(58,46,31,.16);
+    --hero-bg:#0E2A1F;
+    --hero-bg-2:#153827;
+    --hero-ink:#F6EFD8;
+    --hero-ink-soft:#C9BB98;
+    --shadow:0 10px 24px -14px rgba(27,67,50,.35);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0E2016;
+      --surface:#16301F;
+      --surface-2:#1E3C28;
+      --ink:#F0E7CC;
+      --ink-soft:#AFCBB6;
+      --jungle:#79C8A0;
+      --canopy:#5CB789;
+      --gold:#F0C25E;
+      --coral:#FF8A6A;
+      --sky:#6FD3D9;
+      --ok:#54D98C;
+      --err:#FF6F6F;
+      --border:rgba(240,231,204,.18);
+      --shadow:0 10px 26px -12px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0E2016;
+    --surface:#16301F;
+    --surface-2:#1E3C28;
+    --ink:#F0E7CC;
+    --ink-soft:#AFCBB6;
+    --jungle:#79C8A0;
+    --canopy:#5CB789;
+    --gold:#F0C25E;
+    --coral:#FF8A6A;
+    --sky:#6FD3D9;
+    --ok:#54D98C;
+    --err:#FF6F6F;
+    --border:rgba(240,231,204,.18);
+    --shadow:0 10px 26px -12px rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Nunito",ui-sans-serif,system-ui,sans-serif;
+    line-height:1.55;
+  }
+  h1,h2,h3,.display{
+    font-family:"Baloo 2","Nunito",ui-sans-serif,sans-serif;
+    text-wrap:balance;
+    font-weight:700;
+  }
+  .wrap{
+    max-width:760px;
+    margin:0 auto;
+    padding:0 18px 64px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:linear-gradient(180deg,var(--hero-bg) 0%,var(--hero-bg-2) 100%);
+    color:var(--hero-ink);
+    padding:30px 18px 0;
+    overflow:hidden;
+    position:relative;
+  }
+  .hero-inner{
+    max-width:760px;
+    margin:0 auto;
+    position:relative;
+    z-index:2;
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:"Baloo 2",sans-serif;
+    font-weight:600;
+    font-size:.82rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--hero-ink-soft);
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.18);
+    padding:5px 12px;
+    border-radius:999px;
+  }
+  .hero h1{
+    font-size:clamp(1.9rem,6vw,2.7rem);
+    margin:14px 0 6px;
+    color:var(--hero-ink);
+  }
+  .hero p{
+    margin:0 0 18px;
+    color:var(--hero-ink-soft);
+    font-size:1.02rem;
+    max-width:52ch;
+  }
+  .skyline{
+    display:block;
+    width:100%;
+    height:auto;
+    margin-top:6px;
+  }
+
+  /* ---------- PROGRESS BAR ---------- */
+  .progress-dock{
+    position:sticky;
+    top:0;
+    z-index:5;
+    background:var(--bg);
+    border-bottom:1px solid var(--border);
+    padding:10px 18px;
+  }
+  .progress-row{
+    max-width:760px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .stamps{
+    display:flex;
+    gap:6px;
+    flex:0 0 auto;
+  }
+  .stamp{
+    width:26px;height:26px;border-radius:50%;
+    border:2px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    font-family:"Baloo 2",sans-serif;font-weight:700;font-size:.72rem;
+    color:var(--ink-soft);
+    background:var(--surface);
+    transition:transform .25s ease, background .25s ease, color .25s ease, border-color .25s ease;
+  }
+  .stamp.done{
+    background:var(--canopy);
+    border-color:var(--canopy);
+    color:#fff;
+    transform:scale(1.08);
+  }
+  .bar-track{
+    flex:1 1 auto;
+    height:10px;
+    border-radius:999px;
+    background:var(--surface-2);
+    overflow:hidden;
+    border:1px solid var(--border);
+  }
+  .bar-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,var(--canopy),var(--gold));
+    border-radius:999px;
+    transition:width .4s ease;
+  }
+  .bar-label{
+    flex:0 0 auto;
+    font-family:"Baloo 2",sans-serif;
+    font-weight:700;
+    font-size:.82rem;
+    color:var(--ink-soft);
+    font-variant-numeric:tabular-nums;
+  }
+
+  /* ---------- TRAIL / STATIONS ---------- */
+  .trail{
+    list-style:none;
+    margin:34px 0 0;
+    padding:0;
+    position:relative;
+  }
+  .station{
+    position:relative;
+    padding:0 0 34px 54px;
+  }
+  .station::before{
+    content:"";
+    position:absolute;
+    left:17px;
+    top:38px;
+    bottom:-4px;
+    width:2px;
+    background:repeating-linear-gradient(var(--border) 0 6px, transparent 6px 12px);
+  }
+  .station:last-child::before{display:none;}
+  .badge{
+    position:absolute;
+    left:0; top:0;
+    width:36px;height:36px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:"Baloo 2",sans-serif;
+    font-weight:800;
+    font-size:.95rem;
+    color:#fff;
+    box-shadow:var(--shadow);
+  }
+  .station[data-accent="canopy"] .badge{background:var(--canopy);}
+  .station[data-accent="sky"] .badge{background:var(--sky);}
+  .station[data-accent="gold"] .badge{background:var(--gold); color:var(--jungle);}
+  .station[data-accent="coral"] .badge{background:var(--coral);}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:18px 20px 20px;
+    box-shadow:var(--shadow);
+  }
+  .station h2{
+    font-size:1.2rem;
+    margin:0 0 2px;
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .station .kicker{
+    font-family:"Baloo 2",sans-serif;
+    font-size:.72rem;
+    font-weight:700;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:0 0 2px;
+  }
+  .station .instructions{
+    color:var(--ink-soft);
+    font-size:.95rem;
+    margin:6px 0 16px;
+  }
+  .station .instructions b{color:var(--ink);}
+
+  /* vocab matching */
+  .match-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px 14px;
+  }
+  .chip{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    width:100%;
+    text-align:left;
+    border:1.5px solid var(--border);
+    background:var(--surface-2);
+    color:var(--ink);
+    border-radius:12px;
+    padding:9px 10px;
+    font-family:"Nunito",sans-serif;
+    font-weight:700;
+    font-size:.92rem;
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease, transform .1s ease;
+  }
+  .chip svg{width:24px;height:24px;flex:0 0 auto;}
+  .chip:hover{border-color:var(--canopy);}
+  .chip.selected{border-color:var(--gold); background:color-mix(in srgb, var(--gold) 18%, var(--surface-2));}
+  .chip.matched{
+    border-color:var(--ok);
+    background:color-mix(in srgb, var(--ok) 16%, var(--surface-2));
+    cursor:default;
+    opacity:.9;
+  }
+  .chip.wrong{
+    border-color:var(--err);
+    animation:shake .32s ease;
+  }
+  @keyframes shake{
+    20%{transform:translateX(-4px);} 40%{transform:translateX(4px);}
+    60%{transform:translateX(-3px);} 80%{transform:translateX(3px);} 100%{transform:translateX(0);}
+  }
+
+  /* fill-in items */
+  .item{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:baseline;
+    gap:6px;
+    padding:9px 0;
+    border-bottom:1px dashed var(--border);
+    font-size:.98rem;
+  }
+  .item:last-of-type{border-bottom:none;}
+  .item .num{
+    font-family:"Baloo 2",sans-serif;
+    font-weight:700;
+    color:var(--ink-soft);
+    margin-right:2px;
+  }
+  .item input[type="text"]{
+    flex:1 1 140px;
+    min-width:120px;
+    border:1.5px solid var(--border);
+    border-radius:9px;
+    padding:7px 10px;
+    font-family:"Nunito",sans-serif;
+    font-size:.95rem;
+    background:var(--surface-2);
+    color:var(--ink);
+  }
+  .item input[type="text"]:focus{
+    outline:2px solid var(--sky);
+    outline-offset:1px;
+  }
+  .item input.ok{border-color:var(--ok); background:color-mix(in srgb, var(--ok) 14%, var(--surface-2));}
+  .item input.bad{border-color:var(--err); background:color-mix(in srgb, var(--err) 12%, var(--surface-2));}
+  .item .prompt{color:var(--ink-soft);}
+  .item .correction{
+    flex-basis:100%;
+    font-size:.84rem;
+    color:var(--err);
+    margin-top:2px;
+  }
+  .item .correction b{color:var(--ink);}
+
+  .qa-pair{
+    border-bottom:1px dashed var(--border);
+    padding:10px 0;
+  }
+  .qa-pair:last-of-type{border-bottom:none;}
+  .qa-pair .prompt-line{
+    font-size:.84rem;
+    font-weight:700;
+    color:var(--ink-soft);
+    margin-bottom:6px;
+  }
+  .qa-pair .row{
+    display:flex;
+    gap:8px;
+    margin-bottom:6px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .qa-pair label{
+    font-size:.78rem;
+    color:var(--ink-soft);
+    flex:0 0 76px;
+  }
+
+  textarea{
+    width:100%;
+    min-height:110px;
+    border:1.5px solid var(--border);
+    border-radius:12px;
+    padding:12px;
+    font-family:"Nunito",sans-serif;
+    font-size:.97rem;
+    background:var(--surface-2);
+    color:var(--ink);
+    resize:vertical;
+  }
+  textarea:focus{outline:2px solid var(--sky); outline-offset:1px;}
+
+  .checklist{
+    list-style:none;
+    padding:0;
+    margin:12px 0 0;
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+  }
+  .checklist li{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:.88rem;
+    color:var(--ink-soft);
+  }
+  .checklist input{width:16px;height:16px;accent-color:var(--canopy);}
+
+  .btn{
+    font-family:"Baloo 2",sans-serif;
+    font-weight:700;
+    font-size:.92rem;
+    border:none;
+    border-radius:12px;
+    padding:10px 18px;
+    cursor:pointer;
+    color:#fff;
+    background:var(--canopy);
+    box-shadow:var(--shadow);
+    transition:transform .12s ease, filter .12s ease;
+  }
+  .btn:hover{filter:brightness(1.08);}
+  .btn:active{transform:translateY(1px);}
+  .btn.secondary{
+    background:transparent;
+    color:var(--ink-soft);
+    box-shadow:none;
+    border:1.5px solid var(--border);
+    font-weight:600;
+  }
+  .btn-row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-top:14px;
+    flex-wrap:wrap;
+  }
+  .result-msg{
+    font-family:"Baloo 2",sans-serif;
+    font-weight:700;
+    font-size:.88rem;
+  }
+  .result-msg.ok{color:var(--ok);}
+  .result-msg.pending{color:var(--ink-soft);}
+
+  .hint-tag{
+    display:inline-block;
+    font-size:.76rem;
+    font-weight:700;
+    color:var(--coral);
+    background:color-mix(in srgb, var(--coral) 14%, transparent);
+    border-radius:999px;
+    padding:2px 9px;
+    margin-left:4px;
+  }
+
+  /* final badge */
+  .finale{
+    text-align:center;
+    padding:26px 20px;
+    border-radius:18px;
+    background:linear-gradient(160deg,var(--hero-bg),var(--hero-bg-2));
+    color:var(--hero-ink);
+    box-shadow:var(--shadow);
+    opacity:.45;
+    filter:grayscale(.5);
+    transition:opacity .5s ease, filter .5s ease, transform .5s ease;
+    transform:scale(.98);
+  }
+  .finale.unlocked{
+    opacity:1;
+    filter:none;
+    transform:scale(1);
+  }
+  .finale h2{color:var(--hero-ink); margin-bottom:4px;}
+  .finale p{color:var(--hero-ink-soft); margin:0;}
+  .finale .medal{
+    width:58px;height:58px;margin:0 auto 10px;
+  }
+
+  .footer-note{
+    text-align:center;
+    margin-top:22px;
+    font-size:.78rem;
+    color:var(--ink-soft);
+  }
+  .footer-note button{
+    background:none;border:none;
+    color:var(--ink-soft);
+    text-decoration:underline;
+    cursor:pointer;
+    font:inherit;
+    padding:0;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  @media (max-width:480px){
+    .match-grid{grid-template-columns:1fr;}
+    .qa-pair label{flex-basis:100%;}
+  }
+</style>
+
+<div class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">🧭 Unit 5 · Simple Past Tense</span>
+    <h1>La Expedición del Pasado</h1>
+    <p>Stefano explora montañas, volcanes y selvas mientras practica el pasado simple en inglés. Completa las 6 estaciones del camino — cada una te acerca más a la meta.</p>
+  </div>
+  <svg class="skyline" viewBox="0 0 760 120" preserveAspectRatio="none" aria-hidden="true">
+    <rect x="0" y="0" width="760" height="120" fill="none"/>
+    <polygon points="0,120 90,40 150,80 230,20 300,80 360,46 420,90 500,30 560,75 630,45 700,85 760,55 760,120" fill="#163A2A"/>
+    <polygon points="190,120 230,55 270,120" fill="#1E4A36"/>
+    <circle cx="230" cy="55" r="6" fill="var(--coral)" opacity=".85"/>
+    <polygon points="430,120 500,48 570,120" fill="#1E4A36"/>
+    <circle cx="520" cy="95" r="20" fill="#235C43"/>
+    <circle cx="545" cy="100" r="26" fill="#1E4A36"/>
+    <rect x="0" y="108" width="760" height="12" fill="var(--sky)" opacity=".35"/>
+  </svg>
+</div>
+
+<div class="progress-dock">
+  <div class="progress-row">
+    <div class="stamps" id="stamps"></div>
+    <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
+    <div class="bar-label" id="barLabel">0/6</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <ol class="trail">
+
+    <!-- STATION A: VOCAB -->
+    <li class="station" data-accent="canopy">
+      <div class="badge">A</div>
+      <div class="card">
+        <p class="kicker">Estación 1 · Vocabulario</p>
+        <h2>El mapa de paisajes</h2>
+        <p class="instructions">Toca una palabra en inglés y luego su traducción en español para formar la pareja. <b>10 parejas en total.</b></p>
+        <div class="match-grid" id="matchGrid"></div>
+        <div class="btn-row">
+          <span class="result-msg" id="matchMsg">0 / 10 emparejadas</span>
+        </div>
+      </div>
+    </li>
+
+    <!-- STATION B -->
+    <li class="station" data-accent="sky">
+      <div class="badge">B</div>
+      <div class="card">
+        <p class="kicker">Estación 2 · Verbos irregulares</p>
+        <h2>Diario de viaje</h2>
+        <p class="instructions">Completa cada oración con el pasado del verbo correcto: <b>eat, catch, drink, have, see, swim, go</b>.</p>
+        <div id="stationB"></div>
+        <div class="btn-row">
+          <button class="btn" data-check="b">Revisar</button>
+          <span class="result-msg pending" id="msgB"></span>
+        </div>
+      </div>
+    </li>
+
+    <!-- STATION C -->
+    <li class="station" data-accent="canopy">
+      <div class="badge">C</div>
+      <div class="card">
+        <p class="kicker">Estación 3 · Afirmativo → Negativo</p>
+        <h2>El puente did not</h2>
+        <p class="instructions"><b>did not (didn't) + verbo BASE</b> — sin -ed. Ejemplo: <i>I played</i> → <i>I did not play</i>.</p>
+        <div id="stationC"></div>
+        <div class="btn-row">
+          <button class="btn" data-check="c">Revisar</button>
+          <span class="result-msg pending" id="msgC"></span>
+        </div>
+      </div>
+    </li>
+
+    <!-- STATION D -->
+    <li class="station" data-accent="sky">
+      <div class="badge">D</div>
+      <div class="card">
+        <p class="kicker">Estación 4 · Preguntas</p>
+        <h2>La cueva de las preguntas</h2>
+        <p class="instructions">Escribe la pregunta con <b>Did</b> y la respuesta corta. Ejemplo: <i>Did you see statues? — Yes, I did.</i></p>
+        <div id="stationD"></div>
+        <div class="btn-row">
+          <button class="btn" data-check="d">Revisar</button>
+          <span class="result-msg pending" id="msgD"></span>
+        </div>
+      </div>
+    </li>
+
+    <!-- STATION E -->
+    <li class="station" data-accent="coral">
+      <div class="badge">E</div>
+      <div class="card">
+        <p class="kicker">Estación 5 · Desafío especial<span class="hint-tag">tus errores reales</span></p>
+        <h2>El volcán de la corrección</h2>
+        <p class="instructions">Estas oraciones tienen errores que <b>tú mismo escribiste</b> en tu cuaderno. ¡Corrígelas!</p>
+        <div id="stationE"></div>
+        <div class="btn-row">
+          <button class="btn" data-check="e">Revisar</button>
+          <span class="result-msg pending" id="msgE"></span>
+        </div>
+      </div>
+    </li>
+
+    <!-- STATION F -->
+    <li class="station" data-accent="gold">
+      <div class="badge">F</div>
+      <div class="card">
+        <p class="kicker">Estación 6 · Escritura libre</p>
+        <h2>Tu propio diario de vacaciones</h2>
+        <p class="instructions">Responde en pasado: ¿Where did you go? ¿What did you do? ¿What did you see? ¿What did you eat and drink?</p>
+        <textarea id="freeWrite" placeholder="Last summer, I went to..."></textarea>
+        <ul class="checklist">
+          <li><input type="checkbox" id="chk1"><label for="chk1">Usé verbos en pasado (went, saw, ate, drank...)</label></li>
+          <li><input type="checkbox" id="chk2"><label for="chk2">No mezclé presente con pasado (nada de "I see")</label></li>
+          <li><input type="checkbox" id="chk3"><label for="chk3">Si usé negativo, escribí "did not + verbo base"</label></li>
+        </ul>
+        <div class="btn-row">
+          <button class="btn" id="finishF">Marcar como completado</button>
+          <span class="result-msg pending" id="msgF"></span>
+        </div>
+      </div>
+    </li>
+  </ol>
+
+  <div class="finale" id="finale">
+    <svg class="medal" viewBox="0 0 64 64" aria-hidden="true">
+      <circle cx="32" cy="26" r="18" fill="var(--gold)"/>
+      <circle cx="32" cy="26" r="12" fill="var(--hero-bg)"/>
+      <polygon points="32,18 34.2,23 39.5,23.3 35.3,26.8 36.8,32 32,28.8 27.2,32 28.7,26.8 24.5,23.3 29.8,23" fill="var(--gold)"/>
+      <polygon points="22,40 26,56 32,50 38,56 42,40" fill="var(--coral)"/>
+    </svg>
+    <h2>¡Explorador del Pasado!</h2>
+    <p>Completaste las 6 estaciones. Simple Past: conquistado.</p>
+  </div>
+
+  <p class="footer-note">Tu progreso se guarda en este dispositivo. <button id="resetBtn" type="button">Reiniciar expedición</button></p>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var STORE_KEY = "expedicion-pasado-progress-v1";
+
+  function loadState(){
+    try{
+      var raw = localStorage.getItem(STORE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    }catch(e){ return {}; }
+  }
+  function saveState(){
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  var state = Object.assign({
+    vocab:{matched:[]},
+    b:{values:["","","","","","",""], done:false},
+    c:{values:["","","","","",""], done:false},
+    d:{values:["","","","","","","",""], done:false},
+    e:{values:["","","","",""], done:false},
+    f:{text:"", chk:[false,false,false], done:false}
+  }, loadState());
+
+  function normalize(s){
+    s = (s || "").toLowerCase();
+    s = s.replace(/didn[’']?t/g, "did not");
+    s = s.replace(/[^a-z\s]/g, " ");
+    s = s.replace(/\s+/g, " ").trim();
+    return s;
+  }
+
+  function icon(key){
+    var icons = {
+      cave:'<svg viewBox="0 0 32 32"><path d="M4,28 L4,16 Q16,2 28,16 L28,28 Z" fill="var(--ink-soft)" opacity=".3"/><path d="M9,28 L9,18 Q16,8 23,18 L23,28 Z" fill="var(--jungle)"/></svg>',
+      desert:'<svg viewBox="0 0 32 32"><circle cx="23" cy="8" r="4" fill="var(--gold)"/><path d="M2,26 Q10,14 18,26 Q24,18 30,26 Z" fill="var(--gold)" opacity=".85"/></svg>',
+      forest:'<svg viewBox="0 0 32 32"><polygon points="8,21 14,6 20,21" fill="var(--jungle)"/><polygon points="18,25 24,10 30,25" fill="var(--canopy)"/><rect x="12" y="21" width="3" height="7" fill="#6b4a2b"/><rect x="22" y="25" width="3" height="5" fill="#6b4a2b"/></svg>',
+      island:'<svg viewBox="0 0 32 32"><ellipse cx="16" cy="25" rx="13" ry="3" fill="var(--sky)" opacity=".45"/><ellipse cx="14" cy="22" rx="7" ry="3" fill="var(--gold)"/><line x1="14" y1="22" x2="14" y2="9" stroke="#6b4a2b" stroke-width="2"/><path d="M14,10 Q7,8 6,13" stroke="var(--canopy)" stroke-width="2" fill="none"/><path d="M14,10 Q21,8 22,13" stroke="var(--canopy)" stroke-width="2" fill="none"/></svg>',
+      jungle:'<svg viewBox="0 0 32 32"><circle cx="10" cy="13" r="7" fill="var(--canopy)"/><circle cx="20" cy="10" r="8" fill="var(--jungle)"/><rect x="14" y="19" width="3" height="9" fill="#6b4a2b"/></svg>',
+      lake:'<svg viewBox="0 0 32 32"><polygon points="4,22 12,9 20,22" fill="var(--jungle)" opacity=".6"/><ellipse cx="16" cy="25" rx="13" ry="4" fill="var(--sky)"/></svg>',
+      mountain:'<svg viewBox="0 0 32 32"><polygon points="4,26 13,9 18,17 22,11 29,26" fill="var(--canopy)"/><polygon points="13,9 16,15 10,15" fill="#fff" opacity=".9"/></svg>',
+      river:'<svg viewBox="0 0 32 32"><rect x="2" y="2" width="28" height="28" rx="4" fill="var(--canopy)" opacity=".2"/><path d="M5,6 Q14,12 9,18 Q4,24 15,28" stroke="var(--sky)" stroke-width="4" fill="none" stroke-linecap="round"/></svg>',
+      volcano:'<svg viewBox="0 0 32 32"><polygon points="6,27 16,7 26,27" fill="var(--jungle)"/><circle cx="16" cy="7" r="3" fill="var(--coral)"/><circle cx="16" cy="3" r="1.6" fill="var(--gold)"/></svg>',
+      waterfall:'<svg viewBox="0 0 32 32"><rect x="8" y="2" width="10" height="6" fill="var(--jungle)"/><line x1="11" y1="8" x2="10" y2="23" stroke="var(--sky)" stroke-width="2"/><line x1="15" y1="8" x2="15" y2="23" stroke="var(--sky)" stroke-width="2"/><line x1="19" y1="8" x2="20" y2="23" stroke="var(--sky)" stroke-width="2"/><ellipse cx="15" cy="25" rx="10" ry="3" fill="var(--sky)" opacity=".45"/></svg>'
+    };
+    return icons[key] || "";
+  }
+
+  /* ---------------- Station A: matching ---------------- */
+  var vocabPairs = [
+    ["cave","cueva"],["desert","desierto"],["forest","bosque"],["island","isla"],
+    ["jungle","selva"],["lake","lago"],["mountain","montaña"],["river","río"],
+    ["volcano","volcán"],["waterfall","catarata"]
+  ];
+  var engOrder = vocabPairs.map(function(p){return p[0];});
+  var esOrder = vocabPairs.map(function(p){return p[1];});
+  // shuffle spanish side
+  for(var i=esOrder.length-1;i>0;i--){
+    var j = Math.floor(Math.random()*(i+1));
+    var tmp = esOrder[i]; esOrder[i]=esOrder[j]; esOrder[j]=tmp;
+  }
+  var pairMap = {};
+  vocabPairs.forEach(function(p){ pairMap[p[0]] = p[1]; });
+
+  var matchGrid = document.getElementById("matchGrid");
+  var leftCol = document.createElement("div");
+  var rightCol = document.createElement("div");
+  leftCol.style.display = "flex"; leftCol.style.flexDirection="column"; leftCol.style.gap="10px";
+  rightCol.style.display = "flex"; rightCol.style.flexDirection="column"; rightCol.style.gap="10px";
+  matchGrid.appendChild(leftCol);
+  matchGrid.appendChild(rightCol);
+
+  var selectedEng = null, selectedEs = null;
+
+  engOrder.forEach(function(word){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    b.dataset.word = word;
+    b.dataset.side = "eng";
+    b.innerHTML = icon(word) + "<span>" + word + "</span>";
+    if(state.vocab.matched.indexOf(word) > -1){ b.classList.add("matched"); }
+    b.addEventListener("click", function(){ onPick(b); });
+    leftCol.appendChild(b);
+  });
+  esOrder.forEach(function(word){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    b.dataset.word = word;
+    b.dataset.side = "es";
+    b.innerHTML = "<span>" + word + "</span>";
+    var engForThis = Object.keys(pairMap).filter(function(k){return pairMap[k]===word;})[0];
+    if(state.vocab.matched.indexOf(engForThis) > -1){ b.classList.add("matched"); }
+    b.addEventListener("click", function(){ onPick(b); });
+    rightCol.appendChild(b);
+  });
+
+  function onPick(btn){
+    if(btn.classList.contains("matched")) return;
+    if(btn.dataset.side === "eng"){
+      if(selectedEng) selectedEng.classList.remove("selected");
+      selectedEng = btn;
+      btn.classList.add("selected");
+    } else {
+      if(selectedEs) selectedEs.classList.remove("selected");
+      selectedEs = btn;
+      btn.classList.add("selected");
+    }
+    if(selectedEng && selectedEs){
+      var engWord = selectedEng.dataset.word;
+      var esWord = selectedEs.dataset.word;
+      if(pairMap[engWord] === esWord){
+        selectedEng.classList.remove("selected");
+        selectedEs.classList.remove("selected");
+        selectedEng.classList.add("matched");
+        selectedEs.classList.add("matched");
+        if(state.vocab.matched.indexOf(engWord) === -1){
+          state.vocab.matched.push(engWord);
+        }
+        selectedEng = null; selectedEs = null;
+        updateMatchMsg();
+        saveState();
+        updateProgress();
+      } else {
+        var e1 = selectedEng, e2 = selectedEs;
+        e1.classList.add("wrong"); e2.classList.add("wrong");
+        setTimeout(function(){
+          e1.classList.remove("selected","wrong");
+          e2.classList.remove("selected","wrong");
+        }, 340);
+        selectedEng = null; selectedEs = null;
+      }
+    }
+  }
+  function updateMatchMsg(){
+    document.getElementById("matchMsg").textContent = state.vocab.matched.length + " / 10 emparejadas";
+  }
+  updateMatchMsg();
+
+  /* ---------------- Generic fill-in builder ---------------- */
+  function buildItems(containerId, items, stateKey, withPrompt){
+    var container = document.getElementById(containerId);
+    items.forEach(function(it, idx){
+      var row = document.createElement("div");
+      row.className = "item";
+      var num = document.createElement("span");
+      num.className = "num";
+      num.textContent = (idx+1) + ".";
+      row.appendChild(num);
+
+      if(withPrompt){
+        var p = document.createElement("span");
+        p.className = "prompt";
+        p.textContent = it.prompt + " →";
+        row.appendChild(p);
+      } else {
+        var parts = it.sentence.split("___");
+        var pre = document.createElement("span");
+        pre.className = "prompt";
+        pre.textContent = parts[0];
+        row.appendChild(pre);
+      }
+
+      var input = document.createElement("input");
+      input.type = "text";
+      input.autocomplete = "off";
+      input.spellcheck = false;
+      input.setAttribute("aria-label", "Respuesta " + (idx+1));
+      input.value = state[stateKey].values[idx] || "";
+      input.addEventListener("input", function(){
+        state[stateKey].values[idx] = input.value;
+        input.classList.remove("ok","bad");
+        var corr = row.querySelector(".correction");
+        if(corr) corr.remove();
+        saveState();
+      });
+      row.appendChild(input);
+
+      if(!withPrompt){
+        var post = document.createElement("span");
+        post.className = "prompt";
+        var parts2 = it.sentence.split("___");
+        post.textContent = parts2[1] || "";
+        row.appendChild(post);
+      }
+
+      if(it.hint){
+        var hintTag = document.createElement("span");
+        hintTag.className = "hint-tag";
+        hintTag.textContent = it.hint;
+        row.appendChild(hintTag);
+      }
+
+      container.appendChild(row);
+    });
+  }
+
+  var bItems = [
+    {sentence:"Last summer, I ___ to Arequipa with my family.", answer:"went"},
+    {sentence:"We ___ a big fish in the river.", answer:"caught"},
+    {sentence:"I ___ a volcano for the first time. It was amazing!", answer:"saw"},
+    {sentence:"My sister ___ in the lake. The water was cold.", answer:"swam"},
+    {sentence:"We ___ lunch on the mountain.", answer:"had"},
+    {sentence:"I ___ rice and chicken for dinner.", answer:"ate"},
+    {sentence:"My dad ___ coffee every morning on the trip.", answer:"drank"}
+  ];
+  buildItems("stationB", bItems, "b", false);
+
+  var cItems = [
+    {prompt:"I walked to school.", answer:"I did not walk to school."},
+    {prompt:"She studied English.", answer:"She did not study English."},
+    {prompt:"They stopped the car.", answer:"They did not stop the car."},
+    {prompt:"We swam in the lake.", answer:"We did not swim in the lake."},
+    {prompt:"He saw a volcano.", answer:"He did not see a volcano."},
+    {prompt:"I drank milk.", answer:"I did not drink milk."}
+  ];
+  buildItems("stationC", cItems, "c", true);
+
+  var eItems = [
+    {prompt:"I see players at the game.", answer:"I saw players at the game."},
+    {prompt:"I drank a milk.", answer:"I drank milk."},
+    {prompt:"I did not stodied for the exam.", answer:"I did not study for the exam."},
+    {prompt:"I did not stopped the ball.", answer:"I did not stop the ball."},
+    {prompt:"Did you kick? I did not kick.", answer:"No, I didn't.", hint:"responde corto"}
+  ];
+  buildItems("stationE", eItems, "e", true);
+
+  /* Station D: question + short answer pairs */
+  var dItems = [
+    {prompt:"You / climb a mountain (sí)", q:"Did you climb a mountain?", a:"Yes, I did."},
+    {prompt:"They / catch a fish (no)", q:"Did they catch a fish?", a:"No, they didn't."},
+    {prompt:"She / visit a museum (sí)", q:"Did she visit a museum?", a:"Yes, she did."},
+    {prompt:"He / go to Hollywood (no)", q:"Did he go to Hollywood?", a:"No, he didn't."}
+  ];
+  (function(){
+    var container = document.getElementById("stationD");
+    dItems.forEach(function(it, idx){
+      var wrap = document.createElement("div");
+      wrap.className = "qa-pair";
+      var pl = document.createElement("div");
+      pl.className = "prompt-line";
+      pl.textContent = (idx+1) + ". " + it.prompt;
+      wrap.appendChild(pl);
+
+      [["¿Pregunta?","q", idx*2], ["Respuesta","a", idx*2+1]].forEach(function(cfg){
+        var row = document.createElement("div");
+        row.className = "row";
+        var label = document.createElement("label");
+        label.textContent = cfg[0];
+        row.appendChild(label);
+        var input = document.createElement("input");
+        input.type = "text";
+        input.autocomplete = "off";
+        input.spellcheck = false;
+        input.style.flex = "1 1 160px";
+        input.value = state.d.values[cfg[2]] || "";
+        input.addEventListener("input", function(){
+          state.d.values[cfg[2]] = input.value;
+          input.classList.remove("ok","bad");
+          saveState();
+        });
+        row.appendChild(input);
+        wrap.appendChild(row);
+      });
+      container.appendChild(wrap);
+    });
+  })();
+
+  function restoreClasses(containerId, items, stateKey, answerKeyFn){
+    // no-op placeholder (classes recomputed on check)
+  }
+
+  /* ---------------- Check logic ---------------- */
+  function checkSimple(items, stateKey, msgId){
+    var container = document.getElementById("station" + stateKey.toUpperCase());
+    var inputs = container.querySelectorAll("input[type=text]");
+    var allOk = true;
+    items.forEach(function(it, idx){
+      var input = inputs[idx];
+      var row = input.closest(".item");
+      var old = row.querySelector(".correction");
+      if(old) old.remove();
+      var ok = normalize(input.value) === normalize(it.answer);
+      input.classList.toggle("ok", ok);
+      input.classList.toggle("bad", !ok);
+      if(!ok){
+        allOk = false;
+        var corr = document.createElement("span");
+        corr.className = "correction";
+        corr.innerHTML = "Respuesta: <b>" + it.answer + "</b>";
+        row.appendChild(corr);
+      }
+    });
+    state[stateKey].done = allOk;
+    saveState();
+    var msg = document.getElementById(msgId);
+    msg.textContent = allOk ? "¡Perfecto, todo correcto!" : "Revisa las marcadas en rojo";
+    msg.className = "result-msg " + (allOk ? "ok" : "pending");
+    updateProgress();
+  }
+
+  document.querySelector('[data-check="b"]').addEventListener("click", function(){
+    checkSimple(bItems, "b", "msgB");
+  });
+  document.querySelector('[data-check="c"]').addEventListener("click", function(){
+    checkSimple(cItems, "c", "msgC");
+  });
+  document.querySelector('[data-check="e"]').addEventListener("click", function(){
+    checkSimple(eItems, "e", "msgE");
+  });
+  document.querySelector('[data-check="d"]').addEventListener("click", function(){
+    var container = document.getElementById("stationD");
+    var inputs = container.querySelectorAll("input[type=text]");
+    var allOk = true;
+    dItems.forEach(function(it, idx){
+      var qInput = inputs[idx*2];
+      var aInput = inputs[idx*2+1];
+      var qOk = normalize(qInput.value) === normalize(it.q);
+      var aOk = normalize(aInput.value) === normalize(it.a);
+      qInput.classList.toggle("ok", qOk); qInput.classList.toggle("bad", !qOk);
+      aInput.classList.toggle("ok", aOk); aInput.classList.toggle("bad", !aOk);
+      if(!qOk || !aOk) allOk = false;
+    });
+    state.d.done = allOk;
+    saveState();
+    var msg = document.getElementById("msgD");
+    msg.textContent = allOk ? "¡Perfecto, todo correcto!" : "Revisa las marcadas en rojo";
+    msg.className = "result-msg " + (allOk ? "ok" : "pending");
+    updateProgress();
+  });
+
+  /* Station F */
+  var freeWrite = document.getElementById("freeWrite");
+  freeWrite.value = state.f.text || "";
+  freeWrite.addEventListener("input", function(){
+    state.f.text = freeWrite.value;
+    saveState();
+  });
+  ["chk1","chk2","chk3"].forEach(function(id, idx){
+    var el = document.getElementById(id);
+    el.checked = !!state.f.chk[idx];
+    el.addEventListener("change", function(){
+      state.f.chk[idx] = el.checked;
+      saveState();
+    });
+  });
+  document.getElementById("finishF").addEventListener("click", function(){
+    var hasText = freeWrite.value.trim().length > 15;
+    state.f.done = hasText;
+    saveState();
+    var msg = document.getElementById("msgF");
+    msg.textContent = hasText ? "¡Diario completado!" : "Escribe un poco más antes de terminar";
+    msg.className = "result-msg " + (hasText ? "ok" : "pending");
+    updateProgress();
+  });
+
+  /* ---------------- Progress ---------------- */
+  var stampsEl = document.getElementById("stamps");
+  var stationKeys = ["A","B","C","D","E","F"];
+  stationKeys.forEach(function(k){
+    var s = document.createElement("div");
+    s.className = "stamp";
+    s.id = "stampStation" + k;
+    s.textContent = k;
+    stampsEl.appendChild(s);
+  });
+
+  function stationDone(key){
+    if(key === "A") return state.vocab.matched.length >= 10;
+    if(key === "B") return !!state.b.done;
+    if(key === "C") return !!state.c.done;
+    if(key === "D") return !!state.d.done;
+    if(key === "E") return !!state.e.done;
+    if(key === "F") return !!state.f.done;
+    return false;
+  }
+
+  function updateProgress(){
+    var doneCount = 0;
+    stationKeys.forEach(function(k){
+      var el = document.getElementById("stampStation" + k);
+      var done = stationDone(k);
+      el.classList.toggle("done", done);
+      if(done) doneCount++;
+    });
+    document.getElementById("barFill").style.width = (doneCount/6*100) + "%";
+    document.getElementById("barLabel").textContent = doneCount + "/6";
+    document.getElementById("finale").classList.toggle("unlocked", doneCount === 6);
+  }
+
+  /* Restore pre-filled validation state visually if previously done */
+  function restoreChecks(){
+    if(state.b.done) checkSimple(bItems, "b", "msgB");
+    if(state.c.done) checkSimple(cItems, "c", "msgC");
+    if(state.e.done) checkSimple(eItems, "e", "msgE");
+    if(state.d.done) document.querySelector('[data-check="d"]').click();
+    if(state.f.done){
+      var msg = document.getElementById("msgF");
+      msg.textContent = "¡Diario completado!";
+      msg.className = "result-msg ok";
+    }
+  }
+  restoreChecks();
+  updateProgress();
+
+  document.getElementById("resetBtn").addEventListener("click", function(){
+    try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+    location.reload();
+  });
+
+})();
+</script>

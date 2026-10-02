@@ -1,0 +1,147 @@
+:root{
+  --bg:#F2E8CF;
+  --surface:#FBF6E9;
+  --surface-2:#EADFC0;
+  --ink:#3A2E1F;
+  --ink-soft:#73614A;
+  --jungle:#1B4332;
+  --canopy:#2D6A4F;
+  --gold:#D99A2B;
+  --coral:#E76F51;
+  --sky:#2C8C93;
+  --ok:#2F9E57;
+  --border:rgba(58,46,31,.16);
+  --hero-bg:#0E2A1F;
+  --hero-bg-2:#153827;
+  --hero-ink:#F6EFD8;
+  --hero-ink-soft:#C9BB98;
+  --shadow:0 10px 24px -14px rgba(27,67,50,.35);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E2016; --surface:#16301F; --surface-2:#1E3C28;
+    --ink:#F0E7CC; --ink-soft:#AFCBB6;
+    --jungle:#79C8A0; --canopy:#5CB789; --gold:#F0C25E; --coral:#FF8A6A; --sky:#6FD3D9;
+    --ok:#54D98C; --border:rgba(240,231,204,.18);
+    --shadow:0 10px 26px -12px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E2016; --surface:#16301F; --surface-2:#1E3C28;
+  --ink:#F0E7CC; --ink-soft:#AFCBB6;
+  --jungle:#79C8A0; --canopy:#5CB789; --gold:#F0C25E; --coral:#FF8A6A; --sky:#6FD3D9;
+  --ok:#54D98C; --border:rgba(240,231,204,.18);
+  --shadow:0 10px 26px -12px rgba(0,0,0,.5);
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"Nunito",ui-sans-serif,system-ui,sans-serif;
+  line-height:1.55;
+}
+h1,h2,h3,.display{
+  font-family:"Baloo 2","Nunito",ui-sans-serif,sans-serif;
+  text-wrap:balance;
+  font-weight:700;
+}
+a{color:var(--sky);}
+.wrap{max-width:860px;margin:0 auto;padding:0 18px 64px;}
+
+/* ---------- HERO ---------- */
+.hero{
+  background:linear-gradient(180deg,var(--hero-bg) 0%,var(--hero-bg-2) 100%);
+  color:var(--hero-ink);
+  padding:30px 18px 0;
+  overflow:hidden;
+  position:relative;
+}
+.hero-inner{max-width:860px;margin:0 auto;position:relative;z-index:2;}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:"Baloo 2",sans-serif;font-weight:600;font-size:.82rem;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--hero-ink-soft);
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+  padding:5px 12px;border-radius:999px;text-decoration:none;
+}
+.hero h1{font-size:clamp(1.9rem,6vw,2.7rem);margin:14px 0 6px;color:var(--hero-ink);}
+.hero p{margin:0 0 18px;color:var(--hero-ink-soft);font-size:1.02rem;max-width:56ch;}
+.skyline{display:block;width:100%;height:auto;margin-top:6px;}
+
+/* ---------- CARDS / NAV ---------- */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:16px;
+  margin-top:28px;
+}
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:20px;
+  box-shadow:var(--shadow);
+  text-decoration:none;
+  color:var(--ink);
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  transition:transform .15s ease;
+}
+.card:hover{transform:translateY(-2px);}
+.card .icon{width:40px;height:40px;}
+.card h3{margin:4px 0 0;font-size:1.15rem;}
+.card p{margin:0;color:var(--ink-soft);font-size:.92rem;}
+.card .tag{
+  font-family:"Baloo 2",sans-serif;font-size:.72rem;font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--canopy);
+}
+
+/* ---------- RESOURCE LIST ---------- */
+.resource{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:16px 18px;
+  margin-bottom:12px;
+  box-shadow:var(--shadow);
+}
+.resource .badge{
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex:0 0 auto;
+  background:var(--canopy);color:#fff;font-family:"Baloo 2",sans-serif;font-weight:800;
+}
+.resource .badge.coral{background:var(--coral);}
+.resource .badge.gold{background:var(--gold);color:var(--jungle);}
+.resource .badge.sky{background:var(--sky);}
+.resource .body{flex:1 1 auto;}
+.resource h4{margin:0 0 2px;font-size:1rem;}
+.resource p{margin:0;color:var(--ink-soft);font-size:.86rem;}
+.resource .actions{display:flex;gap:8px;flex-wrap:wrap;}
+.btn{
+  font-family:"Baloo 2",sans-serif;font-weight:700;font-size:.86rem;
+  border:none;border-radius:10px;padding:9px 14px;cursor:pointer;
+  color:#fff;background:var(--canopy);text-decoration:none;display:inline-block;
+  white-space:nowrap;
+}
+.btn.secondary{background:transparent;color:var(--ink-soft);border:1.5px solid var(--border);}
+
+.section-title{margin:34px 0 4px;font-size:1.3rem;}
+.section-sub{color:var(--ink-soft);margin:0 0 16px;font-size:.92rem;}
+
+.back-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:"Baloo 2",sans-serif;font-weight:700;font-size:.86rem;
+  color:var(--hero-ink-soft);text-decoration:none;margin-bottom:6px;
+}
+
+.footer-note{text-align:center;margin-top:30px;font-size:.78rem;color:var(--ink-soft);}
+
+@media (max-width:480px){
+  .resource{flex-direction:column;align-items:flex-start;}
+}
